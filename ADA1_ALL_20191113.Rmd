@@ -1,0 +1,2224 @@
+---
+title: "Success in the workplace"
+subtitle: "Advanced data analysis 1: Cumulative project file"
+author: "Nestor Pereira"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    toc: true
+    number_sections: true
+    toc_depth: 5
+    code_folding: show
+    df_print: paged
+    #toc_float: true
+      #collapsed: false
+      #smooth_scroll: TRUE
+    theme: cosmo #spacelab #yeti #united
+    highlight: tango
+  pdf_document:
+    df_print: kable    #latex_engine: xelatex
+#sansfont: IBM Plex Sans
+#classoption: landscape
+fontsize: 12pt
+geometry: margin=0.25in
+always_allow_html: yes
+bibliography: Health4_LitReview.bib
+---
+
+
+<!---
+Commenting text:
+  Note that in Markdown you can comment text similar to standard HTML tags.
+  This text won't show in the document
+  because it is between "start" and "end" comment tags.
+-->
+
+----------------------------------------
+
+# Document overview
+
+This document is organized by Week and Class number.
+The in-class assignments are indicated by the Tuesday and Thursday Class numbers.
+Each week's homework is often a combination of Tuesday and Thursday,
+  with a small extension.
+Therefore, "fleshing out" the Tuesday and Thursday sections with a little addition
+  is often sufficient for your homework assignment;
+  that is, you won't need a separate "homework" section for a week but
+  just extend the in-class assignments.
+Rarely, the homework assignment is different from the in-class assignments
+  and requires it's own section in this document.
+
+Consider your readers (graders):
+
+  * organize the document clearly (use this document as an example)
+  * label minor sections under each day (use this document as an example)
+  * For each thing you do, always have these three parts:
+    1. Say what you're going to do and why.
+    2. Do it with code, and document your code.
+    3. Interpret the results.
+
+## Global code options
+
+```{R}
+# I set some GLOBAL R chunk options here.
+#   (to hide this message add "echo=FALSE" to the code chunk options)
+# In particular, see the fig.height and fig.width (in inches)
+#   and notes about the cache option.
+
+knitr::opts_chunk$set(comment = NA, message = FALSE, warning = FALSE, width = 100)
+knitr::opts_chunk$set(fig.align = "center", fig.height = 4, fig.width = 6)
+
+# Note: The "cache=TRUE" option will save the computations of code chunks
+#   so R it doesn't recompute everything every time you recompile.
+#   This can save _tons of time_ if you're working on a small section of code
+#   at the bottom of the document.
+#   Code chunks will be recompiled only if they are edited.
+#   The autodep=TRUE will also update dependent code chunks.
+#   A folder is created with the cache in it -- if you delete the folder, then
+#   all the code chunks will recompute again.
+#   ** If things are working as expected, or I want to freshly compute everything,
+#      I delete the *_cache folder.
+knitr::opts_chunk$set(cache = FALSE) #, autodep=TRUE)  #$
+```
+
+## Document
+
+### Naming
+
+Note: Each class save this file with a new name, updating the last two digits to the class number. Then, you'll have a record of your progress, as well as which files you turned in for grading.
+
+ADA1_HW_ALL_NESARC_Project_05.Rmd
+ADA1_HW_ALL_NESARC_Project_06.Rmd
+ADA1_HW_ALL_NESARC_Project_07.Rmd 
+
+### Structure
+
+Starting in Week03, we will concatenate all our Homework assignments together to retain the
+  relevant information needed for subsequent classes.
+You will also have an opportunity to revisit previous parts to make changes or improvements,
+  such as updating your codebook, modifying your research questions, improving tables and plots.
+I've provided an initial predicted organization of our
+  sections and subsections using the \# and \#\# symbols.
+A table of contents is automatically generated using the "toc: true" in the yaml
+  and can headings in the table of contents are clickable to jump down
+  to each (sub)section.
+
+
+----------------------------------------
+
+# Research Questions
+
+## Week01: Personal Codebook
+
+### Class 02 Rmd, codebook
+
+__Dataset__: Two dataset are selected from AddHealthW4.Two dataset are selected from AddHealthW4
+
+Dataset 1 : Labor market  [H4LM]
+
+The labor market data set contains 15701 observations. It provides information about the number,length, frequency of jobs, even reasons for leaving and current job satisfaction.
+
+Dataset 2 : Personality [H4PE]
+
+The personality data set contains 15701 observations. Personality data set describes people's behavior, attitude and character.
+
+
+__Initial thinking__:Technology and entrepreneurship have strongly influenced the labor market and how it behaves from the beginning of the 21st century.
+
+I believe internet and globalization have increased the number of professional work opportunities, causing a fast paced changing labor market. From my own experience, I've seen how many of my close relatives and friends are constantly changing their job's placement and even specialty. This boom of oportunities may lead to a increasing number of hires and layoffs, basically a constant changing labor market.
+
+__Topic of interest__: As an early professional who will join the labor market soon, I'm interested in finding out how the labor market has changed and what could cause this changes. Several factors might affect it, but in this research, I'm going to focus on how an individual's personality can affect to it's work choices.
+
+__How I did it__: From the labor market dataset we can find many interesting information which shows us reasons why people leave or join jobs and also their role on their current jobs, which could be directly related to job changes. We can have some qualitative assumption which relates certain personality behaviours to work events or changes. With this dataset and study we can quantitatively measure these relationships between behaviour and job variablity.
+
+
+### Codebook
+
+```
+
+Variables used in this codebook are going to be defined with the following criteria:
+
+Key:
+RenamedVarName
+  VarName original in dataset
+  Variable description
+  Data type (Continuous, Discrete, Nominal, Ordinal)
+  Frequency ItemValue Description
+
+
+id
+aid
+unique idenfitier for each observation
+categorical
+
+bio_sex 
+gender
+either of the two sexes (male or female)
+Categorical
+
+There are several publication where this five different personality dimensions are used to judge and evaluate employees.
+
+1)Openness - People who like to learn new things and enjoy new experiences usually score high in openness. Openness includes traits like being insightful and imaginative and having a wide variety of interests.
+
+imagination
+h4pe4
+I have a vivid imagination
+ordinal
+________
+1 strongly agree 
+2 agree
+3 neither agree nor disagree
+4 disagree
+5 strongly disagree 
+6 refused
+8 don't know 
+. missing
+________
+
+risk
+h4pe35
+I like to take risks
+ordinal
+________
+1 strongly agree 
+2 agree
+3 neither agree nor disagree 
+4 disagree
+5 strongly disagree 
+6 refused
+8 don't know 
+. missing
+________
+
+2)Conscientiousness - People that have a high degree of conscientiousness are reliable and prompt. Traits include being organized, methodic, and thorough.
+
+order
+h4pe19
+I like order
+ordinal
+________
+1 strongly agree 
+2 agree
+3 neither agree nor disagree 
+4 disagree
+5 strongly disagree 
+6 refused
+8 don't know 
+. missing
+________
+
+things_back
+h4pe11
+I often forget to put things back in their proper place
+ordinal
+________
+1 strongly agree 
+2 agree
+3 neither agree nor disagree 
+4 disagree
+5 strongly disagree 
+6 refused
+8 don't know 
+. missing
+________
+
+3)Extraversion - Extraverts get their energy from interacting with others, while introverts get their energy from within themselves. Extraversion includes the traits of energetic, talkative, and assertive.
+
+parties
+h4pe17
+I talk to a lot of different people at parties
+ordinal
+________
+1 strongly agree 
+2 agree
+3 neither agree nor disagree 
+4 disagree
+5 strongly disagree 
+6 refused
+8 don't know 
+. missing
+________
+
+background
+h4pe25
+I keep in the background
+ordinal
+________
+1 strongly agree 
+2 agree
+3 neither agree nor disagree 
+4 disagree
+5 strongly disagree 
+6 refused
+8 don't know
+________
+
+4)Agreeableness - These individuals are friendly, cooperative, and compassionate. People with low agreeableness may be more distant. Traits include being kind, affectionate, and sympathetic.
+
+problems
+h4pe10
+I am not interested in other people's problems
+ordinal
+________
+1 strongly agree 
+2 agree
+3 neither agree nor disagree 
+4 disagree
+5 strongly disagree 
+6 refused
+8 don't know 
+. missing
+________
+
+sympathize
+h4pe2
+I sympathize with others' feelings
+ordinal
+________
+1 strongly agree 
+2 agree
+3 neither agree nor disagree 
+4 disagree
+5 strongly disagree 
+6 refused
+8 don't know 
+. missing
+________
+
+5)Neuroticism - Neuroticism is also sometimes called Emotional Stability. This dimension relates to one's emotional stability and degree of negative emotions. People that score high on neuroticism often experience emotional instability and negative emotions. Traits include being moody and tense.
+
+swings
+h4pe4
+I have frequent mood swings
+ordinal
+________
+1 strongly agree 
+2 agree
+3 neither agree nor disagree 
+4 disagree
+5 strongly disagree 
+6 refused
+8 don't know 
+. missing
+________
+
+
+
+stress
+  h4pe22
+  I get stressed out easily
+  ordinal
+  ________
+  1 strongly agree 
+  2 agree
+  3 neither agree nor disagree 
+  4 disagree
+  5 strongly disagree 
+  6 refused
+  8 don't know 
+  . missing
+  ________
+  
+We are trying to understand the relationship between leaving a job early and looking for something new and personality habits.
+We study several variables which show when people leave their jobs and possible reasons why the did it.
+
+fired
+h4lm4
+Thinking back over the period from 2001 to the previous year, how many times have you been fired, let go or laid off from a job?
+numerical
+________
+0 0 times 
+1 1 time 
+2 2 times 
+3 3 times 
+4 4 times
+5-42 NOTE: Range of values omitted from display 
+45 45 times
+50 50 or more times 
+96 refused
+97 legitimate skip 
+98 don't know
+________
+
+
+still_first_job
+h4lm6
+Are you still at your first full-time job at least 10 hours per week?
+categorical
+________
+0 no 
+1 yes 
+6 refused 
+7 legitimate skip
+________
+
+long_first_job
+h4lm9y
+How long did you work at your first full time job? 
+numerical
+________
+0 0 years 
+1 1 year 
+2 2 years 
+3 3 years 
+4 4 years 
+5 5 years 
+6 6 years 
+7 7 years 
+8 8 years 
+9 9 years
+10 10 years 
+11 11 years 
+96 refused
+97 legitimate skip 
+98 don't know
+________
+
+role_first_job
+h4lm10
+Which of the following best describes your first full time job?
+categorical
+________
+1 it was part of my long-term career or work goals at that time 
+2 it was preparation for my long-term career or work goals at that time 
+3 it was not related to my long-term career or work goals at that time 
+4 I did not have a long-term career or work goals at that time 
+7 legitimate skip 
+8 don't know
+________
+
+reason_left
+h4lm17
+What is the main reason you left your most recent job?
+categorical
+________
+1 layoff 
+2 plant closed
+3 end of temporary or seasonal job 
+4 discharged or fired 
+5 program ended 
+6 health problems
+7 pregnancy or family reasons 
+8 return to school
+9 quit to look for another job 
+10 quit to take another job 
+11 retired
+12 military service 
+13 incarceration
+14 other
+95 pretest case, logic changed 
+96 refused
+97 legitimate skip 
+98 don't know
+. missing
+________
+
+health_insurance
+h4lm21a
+health insurance?
+categorical
+________
+0 no 
+1 yes
+5 pretest case, logic changed 
+6 refused
+7 legitimate skip 
+8 don't know
+. missing
+________
+
+vacation
+h4lm21c
+paid vacation or sick leave?
+categorical
+________
+0 no 1 yes
+5 pretest case, logic changed 
+6 refused
+7 legitimate skip 
+8 don't know
+. missing
+________
+
+job_duty
+h4lm24
+Thinking about your official job duties, which of the following statements best describes your supervisory responsibilities at your current primary job?
+categorical
+________
+1 I (supervise/supervised) other employees
+2 I (supervise/supervised)other employees, some of whom (supervise/supervised) others
+3 I (do/did) not supervise anyone 
+5 pretest case, logic changed 
+6 refused
+7 legitimate skip 
+8 don't know
+. missing
+________
+
+satisfied
+h4lm26
+How satisfied (are/were) you with this job, as a whole?
+ordinal
+________
+1 extremely satisfied 
+2 satisfied
+3 neither satisfied nor dissatisfied 
+4 dissatisfied 
+5 extremely dissatisfied
+95 pretest case, logic changed 
+96 refused
+97 legitimate skip 
+98 don't know
+. missing
+________
+
+```
+
+----------------------------------------
+
+## Week02: Literature Review
+
+### Class 03 Research questions
+
+Technology and entrepreneurship have strongly influenced the labor market and how it behaves from the beginning of the 21st century.
+
+We are trying to relate several factors that cause a worker to leave their job and see if personality is related to these actions.
+
+### Week 02 Homework Literature review
+
+1. How to study personality to relate it to job performance?
+  * Google scholar search:personality variables related to job performance
+  * Citation: @barrick1991big
+  * Interesting points: five main personality dimensions are used to study other factors, such as job performance. These five dimensionas are, openness, conscientiousness, extraversion, agreeableness and neuroticism.
+  
+2. Does personality affect to involuntary job loss?
+  * Citation: @anger2017involuntary
+  * Interesting points: When an involuntary job loss happens, just one of the five main personality dimensions (openness) increses while mainting the other 4 stable.
+  
+3. Does personality also relate to the ability to find a job or stay unemployed?
+  * Citation: @viinikainen2012personality
+  * Interesting points: Paper shows a relationship between openness and time a worker enter to unemployment.
+  * Citation: @uysal2011unemployment
+  * Interesting point: Conscientiousness showed to have a positive effect on the instantaneous probability of finding a job and Neuroticism has a negative effect. Extraversion and Agreeableness showed no effect on the duration of unemployment, and Openness eases finding a job mostly for female unemployed workers.
+  
+4. Does personality affect job mobility?
+  * Citations: @van2003personality
+  * Interesting point:Job mobility is affected by factors such as job satisfaction, specific career enhancing attributes and job availability. These mobility measures were related to the Big Five personality factors.
+  
+5. Do riskier people leave their jobs more often?
+  * Citations: @douce1990willingness
+  * Interesting point: This study explored the relationship between women's willingness to take risks nd various aspects of career development such as career salience. Paper ends saying that future research should be extended to subjects in later career stages, which is what we are about to do.
+  
+----------------------------------------
+
+# Data Management
+
+## Week03: Data Subset, Univariate Summaries And Plots
+
+### Background
+
+#### Purpose of study
+
+The present study will try to relate several factors that cause a worker to leave their job and see if personality is related to these actions. The goals of the analysis will include 1) Find what personality is more likely to leave voluntary of involuntary a job, 2) determining whether specific job conditions and factors affect to this voluntary/involuntary change.
+
+#### Variables
+
+*id (identification number)
+*gender (male or female)
+*imagination (If person has imagination)
+*risk (If person likes to take risks)
+*order(If the person is organized)
+*things_back (If the person put things back in their place, AKA organized)
+*parties (If a person is sociable at parties)
+*background (If a person stays in the background)
+*problems ( If a person is interested in other peoples problems)
+*sympathize (If a person sympathizes with others)
+*swings (If a person has frequent mood swings)
+*stress (If a person get stress)
+*fired (How many times a person has been fired)
+*still_first_job (If a person still is at their first job)
+*role_first_job (What was their role of their first job)
+*reason_left (What's the reason for leaving the job)
+*health_insurance (if the job includes benefit such as health insurance)
+*vacation (If the job offers paid vacation)
+*job_duty (What's your role in the organization)
+*satisfied (If a person is satisfied with their current job)
+
+### Data subset
+
+```{R}
+
+# data analysis packages
+library(tidyverse)  # Data manipulation and visualization suite
+library(forcats)    # Factor variables
+library(lubridate)  # Dates
+
+
+load("addhealth_public4.RData")
+
+dim(addhealth_public4)
+
+```
+
+We select the variables of interest and a subset of the dataset including only these variables.
+
+```{R}
+
+
+
+# variables to include in our data subset
+sub <-addhealth_public4 %>%
+  select(
+    aid
+  , bio_sex
+  , h4pe5
+  , h4pe35
+  , h4pe19
+  , h4pe25
+  , h4pe4
+  , h4pe22
+  , h4lm4
+  , h4lm11
+  , h4lm9y
+  , h4lm9m
+  , h4lm21a
+  , h4lm21c
+  , h4lm24
+  , h4lm26
+  , h4lm12
+  , h4lm16m
+  , h4lm19
+  , h4ec1
+  , h4ec8
+  )
+
+dim(sub)
+colnames(sub)
+
+```
+
+### Renaming Variables
+
+```{R}
+
+sub <-
+  sub %>%
+  dplyr::rename(
+    id = aid
+  , gender = bio_sex
+  , imagination = h4pe5  
+  , risk = h4pe35  
+  , order = h4pe19  
+  , background = h4pe25 
+  , swings = h4pe4 
+  , stress = h4pe22 
+  , fired = h4lm4
+  , still_job = h4lm11
+  , long_first_job_years = h4lm9y
+  , long_first_job_months = h4lm9m
+  , health_insurance = h4lm21a
+  , vacation = h4lm21c
+  , job_duty = h4lm24
+  , satisfied = h4lm26
+  , number_jobs_working = h4lm12
+  , month_left_job = h4lm16m
+  , hours_current_work = h4lm19
+  , income = h4ec1
+  , debt = h4ec8
+  
+    )
+
+colnames(sub)
+summary(sub)
+
+
+
+```
+
+### Coding missing values
+
+There are two steps.
+The first step is to recode any existing `NA`s to actual values, if necessary.
+The method for doing this differs for numeric and categorical variables.
+The second step is to recode any coded missing values, such as 9s or 99s, as actual `NA`.
+
+```{R}
+
+str(sub)
+
+head(sub,10)
+
+data<-na.omit(sub)
+
+str(data)
+
+head(data,9)
+```
+
+CREATED VARIABLES
+
+
+        
+Timefirstjob
+  how long did your fist job lasted in months
+  long_first_job_months + long_first_job_years * 12
+
+
+
+```{R}
+
+data$time_first_job<-as.numeric(data$long_first_job_months + data$long_first_job_years * 12)
+
+table(data$time_first_job)
+
+save(data,file="data.Rdata")
+
+```
+```{R}
+save(data,file="data.Rdata")
+
+table(data$long_first_job_years)
+
+```
+
+### Labeling variable levels
+
+```{R}
+
+
+data_named<-data
+
+data_named$gender <-
+  factor(data$gender
+  , levels = c( 1
+              , 2
+              )
+  , labels = c( "Male"
+              , "Female"
+              )
+  )
+
+data_named$swings <-
+  factor(data$swings
+  , levels = c( 1
+              ,2
+              ,3
+              ,4
+              ,5
+              )
+  , labels = c( "Strongly agree"
+              , "Agree"
+              , "Neither agree or disagree"
+              , "Disagree"
+              , "Strongly disagree"
+              )
+  )
+
+
+data_named<-
+  data_named %>%
+  mutate(
+    income=case_when(
+        income ==  1 ~   2500     #  less than $5,000
+      , income ==  2 ~   7500     #  $5,000 to $9,999
+      , income ==  3 ~  12500     #  $10,000 to $14,999
+      , income ==  4 ~  17500     #  $15,000 to $19,999
+      , income ==  5 ~  22500     #  $20,000 to $24,999
+      , income ==  6 ~  27500     #  $25,000 to $29,999
+      , income ==  7 ~  35000     #  $30,000 to $39,999
+      , income ==  8 ~  45000     #  $40,000 to $49,999
+      , income ==  9 ~  62500     #  $50,000 to $74,999
+      , income == 10 ~  87500     #  $75,000 to $99,999
+      , income == 11 ~ 125000     #  $100,000 to $149,999
+      , income == 12 ~ 175000     #  $150,000 or more
+      )
+  )
+  
+
+data_named$risk <-
+  factor(data$risk
+  , levels = c( 1
+              ,2
+              ,3
+              ,4
+              ,5
+              )
+  , labels = c( "Strongly agree"
+              , "Agree"
+              , "Neither agree or disagree"
+              , "Disagree"
+              , "Strongly disagree"
+              )
+  )
+
+data_named$order <-
+  factor(data$order
+  , levels = c( 1
+              ,2
+              ,3
+              ,4
+              ,5
+              )
+  , labels = c( "Strongly agree"
+              , "Agree"
+              , "Neither agree or disagree"
+              , "Disagree"
+              , "Strongly disagree"
+              )
+  )
+
+data_named$background <-
+  factor(data$background
+  , levels = c( 1
+              ,2
+              ,3
+              ,4
+              ,5
+              )
+  , labels = c( "Strongly agree"
+              , "Agree"
+              , "Neither agree or disagree"
+              , "Disagree"
+              , "Strongly disagree"
+              )
+  )
+
+data_named$stress <-
+  factor(data$stress
+  , levels = c( 1
+              ,2
+              ,3
+              ,4
+              ,5
+              )
+  , labels = c( "Strongly agree"
+              , "Agree"
+              , "Neither agree or disagree"
+              , "Disagree"
+              , "Strongly disagree"
+              )
+  )
+
+data_named<-
+  data_named %>%
+  mutate(
+    fired   = replace(fired  , fired   %in% c("97","98"), NA)
+)
+
+data_named<-
+  data_named %>%
+  mutate(
+    long_first_job_months   = replace(long_first_job_months  , long_first_job_months   %in% c("97","98"), NA)
+)
+
+data_named<-
+  data_named %>%
+  mutate(
+    long_first_job_years   = replace(long_first_job_years  , long_first_job_years   %in% c("97","98"), NA)
+)
+
+
+data_named$still_job <-
+  factor(data$still_job
+  , levels = c( 0
+              ,1
+              
+              )
+  , labels = c( "No"
+              , "Yes"
+              )
+  )
+
+data_named$health_insurance <-
+  factor(data$health_insurance
+  , levels = c( 0
+              ,1
+              
+              )
+  , labels = c( "No"
+              , "Yes"
+              )
+  )
+
+data_named$vacation <-
+  factor(data$vacation
+  , levels = c( 0
+              ,1
+              
+              )
+  , labels = c( "No"
+              , "Yes"
+              )
+  )
+
+
+
+data_named$job_duty <-
+  factor(data$job_duty
+  , levels = c( 1
+              ,2
+              ,3
+              )
+  , labels = c( "Supervisor"
+              , "High supervisor"
+              , "No supervisor"
+              )
+  )
+
+data_named$satisfied <-
+  factor(data$satisfied
+  , levels = c( 1
+              ,2
+              ,3
+              ,4
+              ,5
+              )
+  , labels = c( "Ext sat"
+              , "Sat"
+              , "Neither"
+              ,"Dissat"
+              ,"Ext dissat"
+              )
+  )
+
+data_named<-
+  data_named %>%
+  mutate(
+    number_jobs_working   = replace(number_jobs_working  , number_jobs_working   %in% c("97"), NA)
+)
+
+table(data$number_jobs_working)
+
+data_named<-
+  data_named %>%
+  mutate(
+    number_jobs_working   = replace(number_jobs_working  , number_jobs_working   %in% c("98"), NA)
+)
+
+
+data_named<-
+  data_named %>%
+  mutate(
+    month_left_job   = replace(month_left_job  , month_left_job   %in% c("96","97","98"), NA)
+)
+
+data_named<-
+  data_named %>%
+  mutate(
+    month_left_job   = replace(month_left_job  , month_left_job   %in% c("996","997","998"), NA)
+)
+
+data_named<-
+  data_named %>%
+  mutate(
+    hours_current_work   = replace(hours_current_work  , hours_current_work   %in% c("996","997","998"), NA)
+)
+
+data_named<-
+  data_named %>%
+  mutate(
+    time_first_job   = replace(time_first_job  , time_first_job   %in% c("1177","1178","1179","1180","1182","1183","1261","1274"), NA)
+)
+
+data_named<-
+  data_named %>%
+  mutate(
+    debt   = replace(debt  , debt   %in% c("98","96"), NA)
+)
+
+colnames(data)
+table(data_named$satisfied)
+
+save(data_named,file="datanamed.Rdata")
+
+load("datanamed.Rdata")
+
+```
+
+--------------------------------------------------------------------------------
+
+# Graphing and Tabulating
+
+
+
+
+## Categorical variables
+
+## Tables for categorical variables
+
+#### Graphing frequency tables
+
+## Numeric variables
+
+## Graphing numeric variables
+
+----------------------------------------
+
+## Week04: Bivariate graphs
+
+Here we plot the total number of years a person worked at their first job, We can see that there is a lot of people that left their job their first year, which makes a lot of sense. I just cannot understand why there are so many people that left their job the 6th year. Maybe after sabbatical? further research might have to be done to understand better.
+```{R}
+
+library(ggplot2)
+
+load("datanamed.RData")
+
+table(data_named$long_first_job_years)
+
+p<-ggplot(data_named %>% drop_na(long_first_job_years) ,aes(x=long_first_job_years)) + geom_bar() + labs(x = "years", y = "Number", title = "years") + theme_bw() + theme(axis.text.x  = element_text(angle = 90, vjust = 0, hjust = 1)) 
+print(p)
+
+```
+
+### Scatter plot (for regression): x = numerical, y = numerical
+
+Ignoring the years you lasted in a job. We are focusing here on when do people get fired from their jobs. What months is the one when companies decide to make a change. This could be beneficial to companies, because they could hire more people these months having an estimation of the people that leave the company each month.
+
+In this graph we show that there is a small negative correlation between the number of months you lasted on your first job and the number of times a person gets fired.If the number of times a person gets fired is higher on certain months, that means that is the month when the probability to fire people is higher
+```{R}
+
+# plotting numerical vs numerical
+p <- ggplot(data=data_named , aes(x = long_first_job_months  , y =  fired)) + ylim(-1,21)
+p <- p + geom_point(position="jitter",alpha = 1/4) +xlab("months lasted on the first job")
+p <- p + ylab("number of times fired")
+p <- p + labs(title = " months lasted on first job vs number of time fired")
+print(p)
+
+```
+
+In the next graph we show box plots that show the number of times a person gets fired depending on how easily mood swings happen to them.
+
+
+### Box plots (for ANOVA): x = categorical, y = numerical
+
+```{R}
+
+means <- aggregate(fired ~  swings, data_named, mean)
+
+
+p <- ggplot(data_named %>% drop_na(swings) , aes(x=swings, y=fired)) + geom_boxplot() +ylim(-1,31)
+p <- p + geom_jitter(position = position_jitter(width = 0.1), alpha = 1/4) 
+p <- p +  stat_summary(fun.y=mean, colour="red", geom="point", 
+               shape=18, size=3,show_guide = FALSE)
+m<- geom_text(data = means, aes(label = fired, y = fired ))
+print(p)
+
+```
+
+Since in the graph, the means are hard to read, here we plot the means for each boxplot. We can see that people who have more mood swings do get fired in average more times than people that don't.
+
+```{R}
+print(m$data)
+
+```
+
+### Mosaic plot or bivariate bar plots (for contingency tables): x = categorical, y = categorical
+
+On this next plot, we show how an specific gender might get more swing modes than the other. It shows that females strongly agree and agree more to get more swing moods than men. Female also strongly disagree to get more swing modes than men. Meaning that in general, females get more swing modes than men.
+
+```{R}
+
+library(ggplot2)
+
+p<-ggplot(data_named %>% drop_na(gender) ,aes(x=gender, fill=swings)) + geom_bar(position = "fill") + labs(x = "gender", y = "Number", title = "mood swings based on gender") + theme_bw()
+print(p)
+
+```
+
+### Logistic scatter plot (for logistic regression): x = numerical, y = categorical (binary)
+
+On the next graph we compare the effect of doing more hours with the employed or unemployed status. We can also see a smooth logaritmit curve that tries to repesent the probability of having or staying at your current job. We can see that the more hours a person puts in, the higher probability the person has to still have a job.
+
+```{R}
+
+data_named$still_job_bin <- ifelse(data_named$still_job == "No", 0, 1)
+table(data_named$still_job_bin)
+
+binomial_smooth <- function(...) {
+    geom_smooth(method = "glm", method.args = list(family = "binomial"), ...)
+}
+
+p <- ggplot(data_named %>% drop_na(hours_current_work), aes(x = hours_current_work, y = still_job_bin)) +xlab("weekly hours worked") + ylab("leaving the job(0) staying at the job(1)")
+p <- p + geom_jitter(position = position_jitter(height = 0.1), alpha = 1/4)
+p <- p + binomial_smooth()
+ 
+print(p)
+
+```
+
+
+# Statistical methods
+
+## Week05: Simple linear regression, logarithm transformation
+
+### 1. Scatter plot, add a regression line.
+
+```{R}
+
+p <- ggplot(data=data_named , aes(x = hours_current_work  , y =  income))
+p <- p + geom_point(position="jitter",alpha = 0.25) +xlab("hours worked") + ylab("income")
+p <- p + geom_smooth(method = lm) 
+p <- p + labs(title = " hours worked vs income")
+print(p) 
+
+
+
+```
+
+### 2. Fit the linear regression, interpret slope and $R^2$ (R-squared) values
+```{R}
+
+model <- lm(income ~ hours_current_work, data = data_named)
+
+summary(model)
+
+model$coefficients[2]
+
+summary(model)$r.squared
+
+cor(data_named$hours_current_work,data_named$income)
+
+```
+
+The model has a positive slope which shows that the more hours you work, the higher income you get. The income increases 740$ per year per extra hour worked.
+
+R-squared measures how close the data fits the regression line. This data has some issues, since most likely we will only find values between 20h/week and 60h/week. In this small area, we can find several different salaries, meaning that there is a big variability explaining why the Rsquared is high. Even though the regression line doesn't fit ver well the data, it shows that there is a relationship between the hours your work and the income you have.
+
+### 3. Interpret the intercept.  Does it make sense?
+
+Income starts at a minimun of around $40000 which is the dependent variable when the independent variable is the lowest. In our case, the least hours someone can work is 10 hours/ week, so the starting point is not only defined by the intercept but also added the income due to working 10h/week.
+
+The intercept does make sense and helps us find the different incomes when people workmore than 10 hours. But by itself, the intercept doesnt make sense. If someone worked 0 hours/week, based on our regression equation and our intercept coefficient, this person would be getting $32520 without having to work a single hour.
+
+### 4. Try plotting on log scale ($x$-only, $y$-only, both).
+
+```{R}
+
+
+p1<-p + scale_y_log10() + ylab('log10 income')
+p1<-p1 + labs(title = "  hours worked vs log income")
+
+p3<-p + scale_x_log10() + xlab('log10 hours worked')
+p3<-p3 + labs(title = " log hours worked vs income")
+
+
+p2<-p + scale_x_log10() + scale_y_log10() + ylab('log10 income') + xlab('log10 hours worked')
+p2<-p2 + labs(title = " log hours worked vs log income")
+
+library(gridExtra)
+grid.arrange(grobs = list(p,p1,p3,p2), nrow=2, top = "Lets compare the different log transformations")
+
+```
+
+
+
+### 5. Does log transformation help?
+
+Having data with different scaled data can shift the point to a small corner region and make it harder to see all the different values we are studying. The double logarithmic axis transformation centers and spreads the data more, allowing us to detect the correlation better.
+
+The fourth graph show a cleaner plot of the data compared to the original scatter plot and the sinlge log axis transformation ones. The regression line barely changed, but the data seem to fit better to that regression line and its easier for the human eye to appreciate the correlation with the log transformed data.
+
+
+## Week06: Correlation and Categorical contingency tables
+
+
+1. With your previous (or new) bivariate scatter plot, calculate the correlation and interpret.
+    * (1 p) plot is repeated here or the plot is referenced an easy to find from a plot above,
+    * (1 p) correlation is calculated,
+    * (2 p) correlation is interpretted (direction, strength of LINEAR relationship).
+
+
+### Correlation
+
+```{R}
+
+print(p)
+
+# table(data_named$hours_current_work)
+# table(data_named$income)
+
+corr<-cor(data_named$hours_current_work, data_named$income, method = c("pearson"),use = "complete.obs")
+
+sprintf("the spearman correlation measurement is %f",corr)
+```
+
+
+### Interpretation of correlation
+
+We can see a positive correlation which agrees with our initial statement that people who work more hours have higher incomes. But it doesn't have a strong relationsgip because there is a bunch of people who might have some high positions in companies, but only work 40 hours a week and earn over a $100.000 a year, while we also have the other case where people work 2 jobs and work 60 hours a week and still have a lower income since their jobs aren't very qualifies and pay less than the big corporate jobs.
+
+### Contingency table
+
+With your previous (or new) two- or three-variable categorical plot, calculate conditional proportions and interpret.
+    * (1 p) frequency table of variables is given,
+    * (2 p) conditional proportion tables are calculated of the outcome variable conditional on one or two other variables,
+    * (1 p) a well-labelled plot of the proportion table is given,
+    * (2 p) the conditional proportions are interpretted and compared between conditions.
+  
+We are goign to try to find a relationship between still having a job and the fact that the company pays for health insurance for males and females.
+
+```{R}
+
+freq_table <- xtabs( ~ still_job + health_insurance, data = data_named)
+freq_table
+
+prop_table <- prop.table(freq_table, margin = 2)
+prop_table
+```
+
+We can see in the proportional table that a higher percentage of people who had health insurance are still at their jobs. 85% of the people who had health insurance are still at their job, where only 14% left their job with health insurance.
+Only a 66% of the people who did not have health insurance stayed at their jobs which is less than the percentrage from companies offering health insurance.
+```{R}
+# lines are sometimes easier, especially when many categories along the x-axis
+library(ggplot2)
+
+data_named<-data_named %>%drop_na(still_job)
+data_named<-data_named %>%drop_na(gender)
+data_named<-data_named %>%drop_na(health_insurance)
+
+
+p <- ggplot(data = data_named  , aes(x = gender, fill = still_job))
+p <- p + geom_bar(position="fill")
+p <- p + theme_bw() + xlab("Gender") + ylab("percentage")
+p <- p + labs(title = 'Proportion of people still at their jobs based on having health insurance, by gender')
+p <- p + facet_grid(. ~ data_named$health_insurance)
+print(p)
+
+```
+
+We can see that for both genders, having health insurance affected on the fact of staying in the job since more people who had health insurance stayed in the companies. especially for males, a higher percentages of people who had health insurance stayed at their jobs, around a 90%. more females left their job but that only dependent of gender and not from having health insurance or not because we can see that there effect of having or not having health insurance affect the same to male or females.
+
+## Week07: Inference and Parameter estimation (one-sample)
+
+### Dataset description of sampling
+
+In this test we are going to study the income variable, which describe how much money an individual makes a year. We assume our 
+T distribution are meant to be use for small samples. So we are going to create new variables where we only take 10,20,30,40 individuals and apply the T distribution to them. Assuming our population mean is the one obtained from all 4195 observation in our database, we are going to see how good the T distribution does with different sample sizes. We are also applyting a t test to a sample containing all the observations and plotting them all at the end.
+
+```{R}
+
+data_named<-data_named %>%drop_na(income)
+truemean=mean(data_named$income)
+
+t4.summary <- t.test(data_named$income)
+t4.summary
+
+t4.summary$estimate
+t4.summary$conf.int
+
+#t.dist.pval(t.summary)
+
+truemean=mean(data_named$income)
+
+library(ggplot2)
+
+p4 <- ggplot(data_named, aes(income))
+p4 <- p4 + geom_histogram()
+p4 <- p4 + geom_rug(alpha = 1/2)
+# est mean cells
+# # p4 <- p4 + geom_vline(aes(xintercept = t4.summary$estimate)
+#                   , colour = "blue", size = 1)
+# true mean cells
+
+p4 <- p4 + geom_vline(aes(xintercept = truemean)
+                  , colour = "red", linetype = "dotted", size = 1)
+p4 <- p4 + labs(title = "t distribution of mean with all the observations") + geom_rect(aes(xmin = t4.summary$conf.int[1], xmax = t4.summary$conf.int[2], ymin = -10, ymax = -5)
+                  , fill = "blue", alpha = 1)
+
+plot(p4)
+
+```
+
+We could say that there is a 95% chance that the confidence interval you calculated contains the true population mean. In all the graph the CI contains the population mean, is we considered the population mean the sample with all the observation in out dataset.
+
+We can also see that when the number of observation in our sample increases, our estimated mean gets closer to the population mean and the confidence intervak get smaller, meaning that the uncertainty of our estimation is reduced. In the last graph we can see how our confidence interal is very small since we have many observations.
+
+```{R}
+#### Visual comparison of whether sampling distribution is close to Normal via Bootstrap
+# a function to compare the bootstrap sampling distribution with
+#   a normal distribution with mean and SEM estimated from the data
+bs.one.samp.dist <- function(dat, N = 1e4) {
+  n <- length(dat);
+  # resample from data
+  sam <- matrix(sample(dat, size = N * n, replace = TRUE), ncol=N);
+  # draw a histogram of the means
+  sam.mean <- colMeans(sam);
+  # save par() settings
+  old.par <- par(no.readonly = TRUE)
+  # make smaller margins
+  par(mfrow=c(2,1), mar=c(3,2,2,1), oma=c(1,1,1,1))
+  # Histogram overlaid with kernel density curve
+  hist(dat, freq = FALSE, breaks = 6
+      , main = "Plot of data with smoothed density curve")
+  points(density(dat), type = "l")
+  rug(dat)
+
+  hist(sam.mean, freq = FALSE, breaks = 25
+      , main = "Bootstrap sampling distribution of the mean"
+      , xlab = paste("Data: n =", n
+                   , ", mean =", signif(mean(dat), digits = 5)
+                   , ", se =", signif(sd(dat)/sqrt(n)), digits = 5))
+  # overlay a density curve for the sample means
+  points(density(sam.mean), type = "l")
+  # overlay a normal distribution, bold and red
+  x <- seq(min(sam.mean), max(sam.mean), length = 1000)
+  points(x, dnorm(x, mean = mean(dat), sd = sd(dat)/sqrt(n))
+       , type = "l", lwd = 2, col = "red")
+  # place a rug of points under the plot
+  rug(sam.mean)
+  # restore par() settings
+  par(old.par)
+}
+
+#### Visual comparison of whether sampling distribution is close to Normal via Bootstrap
+# a function to compare the bootstrap sampling distribution
+#   of the difference of means from two samples with
+#   a normal distribution with mean and SEM estimated from the data
+bs.two.samp.diff.dist <- function(dat1, dat2, N = 1e4) {
+  n1 <- length(dat1);
+  n2 <- length(dat2);
+  # resample from data
+  sam1 <- matrix(sample(dat1, size = N * n1, replace = TRUE), ncol=N);
+  sam2 <- matrix(sample(dat2, size = N * n2, replace = TRUE), ncol=N);
+  # calculate the means and take difference between populations
+  sam1.mean <- colMeans(sam1);
+  sam2.mean <- colMeans(sam2);
+  diff.mean <- sam1.mean - sam2.mean;
+  # save par() settings
+  old.par <- par(no.readonly = TRUE)
+  # make smaller margins
+  par(mfrow=c(3,1), mar=c(3,2,2,1), oma=c(1,1,1,1))
+  # Histogram overlaid with kernel density curve
+  hist(dat1, freq = FALSE, breaks = 6
+      , main = paste("Sample 1", "\n"
+                    , "n =", n1
+                    , ", mean =", signif(mean(dat1), digits = 5)
+                    , ", sd =", signif(sd(dat1), digits = 5))
+      , xlim = range(c(dat1, dat2)))
+  points(density(dat1), type = "l")
+  rug(dat1)
+
+  hist(dat2, freq = FALSE, breaks = 6
+      , main = paste("Sample 2", "\n"
+                    , "n =", n2
+                    , ", mean =", signif(mean(dat2), digits = 5)
+                    , ", sd =", signif(sd(dat2), digits = 5))
+      , xlim = range(c(dat1, dat2)))
+  points(density(dat2), type = "l")
+  rug(dat2)
+
+  hist(diff.mean, freq = FALSE, breaks = 25
+      , main = paste("Bootstrap sampling distribution of the difference in means", "\n"
+                   , "mean =", signif(mean(diff.mean), digits = 5)
+                   , ", se =", signif(sd(diff.mean), digits = 5)))
+  # overlay a density curve for the sample means
+  points(density(diff.mean), type = "l")
+  # overlay a normal distribution, bold and red
+  x <- seq(min(diff.mean), max(diff.mean), length = 1000)
+  points(x, dnorm(x, mean = mean(diff.mean), sd = sd(diff.mean))
+       , type = "l", lwd = 2, col = "red")
+  # place a rug of points under the plot
+  rug(diff.mean)
+  # restore par() settings
+  par(old.par)
+}
+```
+
+
+
+### Numeric variable confidence interval for mean $\mu$
+
+
+### Categorical variable confidence interval for proportion $p$
+
+On this next problem, we are going to estimate the percentage of people who still have a job and find their confidence interval. We use our binary variable still job and we count the number of people who still have one and the number of people unemployed to create a new datafram where we include a new variable prop(percentages).
+
+```{R}
+
+x=as.integer(table(data_named$still_job_bin)[2])
+n=as.integer(table(data_named$still_job_bin)[1])+x
+
+
+data_still_job <- data.frame(type = c("still_job", "no_job"), freq = c(x, n - x), prop = c(x, n - x) / n)
+
+data_still_job
+
+b.summary=binom.test(x,n,p=as.numeric(x/n),conf.level=0.95)
+
+b.summary
+
+library(ggplot2)
+
+p <- ggplot(subset(data_still_job, type == "still_job"), aes(x=freq,y=prop))
+p <- p + geom_hline(yintercept = c(0, 1), alpha = 1/4)
+p <- p + geom_bar(stat = "identity")
+p <- p + geom_errorbar(aes(min = b.summary$conf.int[1], max = b.summary$conf.int[2]), width=0.25)
+p <- p + geom_hline(yintercept = b.summary$estimate, colour = "red")
+p <- p + scale_y_continuous(limits = c(0, 1))
+p <- p + coord_flip() # flip the x and y axes for horizontal plot
+print(p)
+
+```
+
+In the graph we can see how our confidence interal is very small since we have many observations. There is a 95% chance that the confidence interval you calculated contains the true population mean.
+
+
+
+## Week08: Hypothesis testing (one- and two-sample)
+
+### Mechanics of a hypothesis test (review)
+
+1. Set up the __null and alternative hypotheses__ in words and notation.
+    * In words: ``The population mean for [what is being studied] is different from [value of $\mu_0$].''
+      (Note that the statement in words is in terms of the alternative hypothesis.)
+    * In notation: $H_0: \mu=\mu_0$ versus $H_A: \mu \ne \mu_0$
+      (where $\mu_0$ is specified by the context of the problem).
+
+2. Choose the __significance level__ of the test, such as $\alpha=0.05$.
+
+3. Compute the __test statistic__, such as $t_{s} = \frac{\bar{Y}-\mu_0}{SE_{\bar{Y}}}$, where $SE_{\bar{Y}}=s/\sqrt{n}$ is the standard error.
+
+4. Determine the __tail(s)__ of the sampling distribution where the __$p$-value__ from the test statistic will be calculated
+(for example, both tails, right tail, or left tail).
+(Historically, we would compare the observed test statistic, $t_{s}$,
+with the __critical value__ $t_{\textrm{crit}}=t_{\alpha/2}$
+in the direction of the alternative hypothesis from the
+$t$-distribution table with degrees of freedom $df = n-1$.)
+
+5. State the __conclusion__ in terms of the problem.
+    * Reject $H_0$ in favor of $H_A$ if $p\textrm{-value} < \alpha$.
+    * Fail to reject $H_0$ if $p\textrm{-value} \ge \alpha$.
+    (Note: We DO NOT _accept_ $H_0$.)
+
+6. __Check assumptions__ of the test (for now we skip this).
+
+
+### What do we do about "significance"?
+
+Adapted from **[Significance Magazine](https://rss.onlinelibrary.wiley.com/doi/10.1111/j.1740-9713.2019.01295.x)**.
+
+Recent calls have been made to abandon the term "statistical significance".
+The American Statistical Association (ASA) issued its
+  [statement](https://www.tandfonline.com/doi/pdf/10.1080/00031305.2016.1154108) and
+  [recommendation](https://www.tandfonline.com/doi/full/10.1080/00031305.2019.1583913)
+  on p-values (see the [special issue of p-values](https://www.tandfonline.com/toc/utas20/73/sup1?nav=tocList) for more).
+
+In summary, the problem of "significance" is one of misuse, misunderstanding, and misinterpretation.
+The recommendation in this class is that it is no longer sufficient to say that a
+result is "statistically significant" or "non-significant" depending on whether a p-value is less than a threshold.
+Instead, we will be looking for wording as in the following paragraph.
+
+"The difference between the two groups turns out to be small (8%), while the
+probability ($p$) of observing a result at least as extreme as this under the
+null hypothesis of no difference between the two groups is $p = 0.003$ (that is,
+0.3%). This p-value is statistically significant as it is below our pre-defined
+threshold ($p < 0.05$). However, the p-value tells us only that the 8% difference
+between the two groups is somewhat unlikely given our hypothesis and null model's
+assumptions. More research is required, or other considerations may be needed,
+to conclude that the difference is of practical importance and reproducible."
+
+### Two-sample $t$-test
+
+
+
+
+
+1. Set up the __null and alternative hypotheses__ in words and notation.
+    * In words: `The income population mean for males is different from the income population mean for females.'
+    * In notation: $H_0: \mu_{male} = \mu_{female}$ versus $H_A: \mu_{male} \ne \mu_{female}$
+    
+2. The __significance level__ of the test is $\alpha=0.05$.
+    
+3. Compute the __test statistic__  
+    
+```{R}
+library(ggplot2) 
+
+t_summary<-t.test(income~gender,data_named)
+t_summary
+
+
+```
+
+4. Determine the mean, test statistic and p-value
+
+```{R}
+sprintf("the mean is %f",t_summary$estimate)
+sprintf("the t-statistic is %f",t_summary$statistic)
+sprintf("the p-value is %f",t_summary$p.value)
+```
+
+5. State the __conclusion__ in terms of the problem.
+    * Because $p=`r signif(t_summary$p.value, 3)` < 0.05$,
+    we have sufficient evidence to reject $H_0$, concluding that the estimated yearly male income is not the same as the female yearly income.
+    Since we are rejecting $H_0$, we could have commited a Type-I error where $H_0$ was true, meaning male and females would have the same yearly income.
+
+6. Plot the data and sample estimated
+
+```{R}
+
+p <- ggplot(data_named, aes(x = gender, y = income)) 
+p <- p + geom_boxplot(width = 0.5, alpha = 0.5) 
+p <- p + geom_jitter(position = position_jitter(width = 0.1), alpha = 1/4)
+p <- p + stat_summary(fun.y=mean, geom ="point", shape=18, size=6, colour="red", alpha=0.8)
+p <- p + labs(title="yearly Income by gender")
+print(p)
+
+```
+
+
+
+
+
+## Week09: ANOVA and Assessing Assumptions
+
+We are going to study if the mean income of the employees are the same depending on their job satisfaction. where we say that the means are the same for the different level of satisfaction.
+
+$H_0: \mu_{verysatis} = \mu_{satis} = \mu_{neither} = \mu_{dissatis} = \mu_{verydissatis}$ versus $H_A: not  H_0$
+
+### ANOVA: Total income by job satisfaction
+
+```{R}
+
+library(ggplot2)
+library(tidyverse)  # Data manipulation and visualization suite
+
+p <- ggplot(data_named %>% drop_na(income) %>%drop_na(satisfied), aes(x = satisfied, y = income))
+# plot a reference line for the global mean (assuming no groups)
+p <- p + geom_hline(yintercept = mean(data_named$income),
+colour = "black", linetype = "dashed", size = 0.3, alpha = 0.5)
+# boxplot, size=.75 to stand out behind CI
+p <- p + geom_boxplot(size = 0.75, alpha = 0.5)
+# points for observed data
+p <- p + geom_point(position = position_jitter(w = 0.05, h = 0), alpha = 0.5)
+# diamond at mean for each group
+p <- p + stat_summary(fun.y = mean, geom = "point", shape = 18, size = 6,
+colour = "red", alpha = 0.8)
+# confidence limits based on normal distribution
+p <- p + stat_summary(fun.data = "mean_cl_normal", geom = "errorbar",
+width = .2, colour = "red", alpha = 0.8)
+p <- p + labs(title = "income based on satisfaction") + ylab("annual income")
+print(p)
+
+```
+
+#### ANOVA Hypothesis test
+
+```{R}
+
+fit.f <- aov(income ~ satisfied, data = data_named)
+anova<-summary(fit.f)
+```
+The significance level of the test be $\alpha=0.1$
+```{R}
+sprintf("the p value is %e",anova[[1]]$`Pr(>F)`[1])
+sprintf("the F value is %f",anova[[1]]$`F value`[1])
+              
+```
+
+P-value is << 0.1, we reject the null hypothesis. Meaning that the mean anual income between groups differ at least between one of the groups.
+
+#### Check assumptions
+
+#### Normality
+```{R}
+
+library(ggplot2)
+par(mfrow=c(2,2))
+# Histogram overlaid with kernel density curv
+
+hist(fit.f$residuals, freq = FALSE, breaks = 15)
+points(density(fit.f$residuals), type = "l")
+
+# violin plot
+library(vioplot)
+vioplot(fit.f$residuals, horizontal=TRUE, col="gray")
+
+# boxplot
+boxplot(fit.f$residuals, horizontal=TRUE)
+
+par(mfrow=c(1,1))
+library(car)
+qqPlot(fit.f$residuals, las = 1, id = list(n = 8, cex = 1), lwd = 1, main="QQ Plot")
+
+library(nortest)
+ad.test(fit.f$residuals)
+```
+With this plot we can see that the residuals of the data are not normally distributed.This plot shows that there is not an almost one to one relationship between the norm quantiles and the residuals which means it does not form a straight line. Having a straight line means that the residuals are roughly normally distributed
+
+```{R}
+
+library(nortest)
+ad.test(fit.f$residuals)
+
+```
+
+Also the anderson darling normality test low p value shows a convincing evidence of nonnormality.
+
+
+#### assumption of equal variance between groups
+
+```{R}
+
+bartlett.test(income ~ satisfied, data = data_named)
+
+library(car)
+leveneTest(income ~ satisfied, data = data_named)
+
+fligner.test(income ~ satisfied, data = data_named)
+
+add_sub_summary <- data_named %>% select(satisfied, income) %>% group_by(satisfied) %>% summarise( m = mean(income, na.rm = TRUE)
+, s = sd(income, na.rm = TRUE) , n = length(income) ) 
+
+arrange(add_sub_summary, m)
+
+```
+
+The Barlett,Levene and Fligner-Killeen tests reject equal variance. Looking at the standard deviations (s) above we can say they are not the same, 
+
+
+#### Post Hoc pairwise comparison tests
+
+```{R}
+
+TukeyHSD(fit.f,conf.level = 0.90)
+
+```
+
+Looking at the p-values we can see that these 3 groups anual income do not differ.
+
+dissatisifed-Neither satisifes or dissatisfied 
+Extremely dissatisfied-Neither satisifes or dissatisfied
+Extremely dissatisfied-dissatisifed 
+
+Extremely satisfied | satisfied | neither satisfied or dissatisfied | dissatisfied | extremely dissatisfied
+
+                                 --------------------------------------------------------------------------
+
+
+
+## Week10: Nonparametric methods and Binomial and multinomial proportion tests
+
+### Multinomial goodness-of-fit
+
+
+Set up the null and alternative hypotheses in words and notation. In words: "The add_sub and US Census proportions are equal for people of each level of education." In notation:
+H : = 0.406, = 0.429, = 0.139, and = 0.026
+
+
+#### Observed
+
+#### Expected
+
+### Perform $\chi^2$ Goodness-of-fit test
+
+#### Chi-sq statistic helps us understand the deviations
+
+#### Multiple Comparisons
+
+
+
+
+## Week11: Two-way categorical tables and Simple linear regression, inference
+
+### Two-way categorical analysis.
+
+We are going to study the relationship between job duty and level of satisfaction.
+
+Let's state our Null hypothesis:
+
+In words: ''There is no association between job duty and level of satisfaction.''
+      
+In notation: $H_0: p(i \textrm{ and } j) = p(i)p(j)$ versus $H_A: p(i \textrm{ and } j) \ne p(i)p(j)$, for all row categories $i$ and column categories $j$.
+
+We choose the __significance level__ of the test, such as $\alpha=0.05$
+
+```{R}
+
+tab <- xtabs(~ satisfied + job_duty, data = data_named)
+tab
+
+chitest<- chisq.test(tab, correct=FALSE)
+chitest
+
+prop.table(tab)
+```
+
+Conclusion of the test:
+
+We conclude that we reject the null hypothesis, therefore there is an association or statistically depedency between the job duty and the level of satisfaction.
+
+```{R fig,fig.width=8, fig.height=8}
+library(vcd)
+library(ggplot2)
+
+mosaic(~  job_duty + satisfied, data = data_named, shade=TRUE, legend=TRUE, direction = "v", rot_labels=c(0,0), margin=c(8,0,0) )
+
+chitest$residuals
+
+```
+ 
+ 
+Lets do first a general interpretation of the mosaic plot. From what it's shown, no supervisor employees have a lower level of satisfaction (or a higher level of dissatisfaction) than the supervisor employees. Low supervisor employees have a higher level of satisfaction that high supervisors, maybe cause by having as much freedom as the high supervisor employees but less stress.
+
+For no supervisor employees, we expected more employees extremely satisfied of satisfied with their job and less dissastisfied employees and a lot less of extremely dissatisfied employees.
+For supervisor employees, we expected less extremly satisfied employees and more dissatisfied and extremely dissatisfied employees.
+High supervisor satisfaction frequency was pretty accurate based on the observations there were less people extremely dissatisfied high supervisor employees than we expected.
+
+```{R}
+chitest$residuals
+```
+ 
+Looking at the residuals: 
+
+The residuals between supervisor employees and dissatisfaction and extreme dissatisfaction are very negative, meaning that there are less supervisor employees dissatisfied with their job than expected. Also the residuals between high supervisor employees and extremely dissatisfaction are negavtives smaller than -2, therefore there are also less extremely disastisfied high supervisor employees than expected.
+The residuals between satisfied and extremely satisfied and no Supervisor employees are negative smaller than -2, meaning that there are less satisfied no supervisor employees as we expected.
+
+Let's look at the positive residuals, such as the residuals between dissatisfied and extremely dissatisfied and no supervisor employees, where residuals are positive bigger than 2. Meaning that there are more dissatisfied and extremely dissatisfied no supervisor employees than we expected.
+We can also see positive residuals between extremly satisfied and supervisor employeers, meaning that there are more extremely satisfied supervisor employees than we expected.
+ 
+### Thursday ---------
+
+For the regression analysis we are going to try to predict 
+
+### Simple linear regression.
+
+```{R}
+library(ggplot2)
+
+data_named<-data_named %>%drop_na(debt)
+
+h1<-hist(data_named$debt,breaks=10)
+
+h2<-hist(data_named$income,breaks=20)
+
+p <- ggplot(data=data_named , aes(x = income  , y =  debt))
+p <- p + geom_point(position="jitter",alpha = 0.25) +xlab("income") + ylab("debt")
+p <- p + geom_smooth(method = lm) 
+p <- p + labs(title = " income vs debt")
+
+
+
+p3<-p + scale_x_log10() + xlab('log10 income')
+p3<-p3 + labs(title = " log income vs debt")
+
+
+library(gridExtra)
+grid.arrange(grobs = list(p,p3), nrow=1)
+
+```
+
+```{R}
+
+lm.fit <- lm(debt ~ income, data = data_named)
+
+library(ggplot2)
+p <- ggplot(data_named, aes(x = income, y = debt))
+p <- p + geom_vline(xintercept = 0, alpha = 0.25)
+# prediction bands
+p <- p + geom_ribbon(aes(ymin = predict(lm.fit, data.frame(income)
+                                        , interval = "prediction", level = 0.95)[, 2],
+                         ymax = predict(lm.fit, data.frame(income)
+                                        , interval = "prediction", level = 0.95)[, 3],)
+                  , alpha=0.1, fill="darkgreen")
+# linear regression fit and confidence bands
+p <- p + geom_smooth(method = lm, se = TRUE)
+# jitter a little to uncover duplicate points
+# p <- p + geom_jitter(position = position_jitter(width = 1.5, height = 0.5),alpha=0.15)
+p <- p + geom_jitter(position = position_jitter(0.6), alpha = 0.1)
+p <- p + labs(title = "Regression with confidence and prediction bands")
+print(p)
+
+```
+
+
+
+```{R,fig.width = 10, fig.height = 8}
+
+par(mfrow=c(3,1))
+
+diff.mean=lm.fit$residuals
+
+plot(lm.fit, which = c(1,2)) 
+
+# hist(lm.fit$residuals, breaks=20, main="Residuals") 
+# points(density(lm.fit$residuals), type = "l")
+# rug(lm.fit$residuals)
+
+hist(lm.fit$residuals, freq = FALSE, breaks = 15)
+points(density(lm.fit$residuals), type = "l")
+rug(lm.fit$residuals)
+
+```
+
+#### Lack of fit
+
+Looking at the residuals vs fitted plot, we don't really see any specific pattern, since the model is not linear and slope of a linear aproximation would be almost 0, that doesn't tell us much about the variation of the dependent variable from the dependent one.
+
+#### Residuals normality 
+
+Looking at the QQplot and the histogram, we can say that the residuals are consistent with normality. We can't apreciate this from the residual vs fitted plot because I wasn't able to use the jitter function to show how, there are more residuals in the middle of the plot than the sides making the residuals aproximate to a normal distribution. We can see this on the regression plot with confidence interval, where we can see that there more values closer to the average income making the residuals shaped as a normal distribution.
+
+#### influence points
+
+```{R ,fig.width = 13, fig.height = 8}
+par(mfrow=c(1,2))
+
+plot(influence(lm.fit)$hat, main="Leverages", type = "n")
+text(1:nrow(data_named), influence(lm.fit)$hat, label=paste(1:nrow(data_named)))
+  # horizontal line at zero
+  abline(h = 3*2/82, col = "gray75")
+
+plot(cooks.distance(lm.fit), main="Cook's Distances", type = "n")
+text(1:nrow(data_named), cooks.distance(lm.fit), label=paste(1:nrow(data_named)))
+  # horizontal line at zero
+  abline(h = 1, col = "gray75")
+```
+
+
+
+The calculated D can be considered big distances for many outliers since our data is not correlated and our linear model doesn't fit the data correctly. this two variables are the only continuos numeric variables I had realted to my ropic so I had to used them. Unlucky me that there was no strong relationship between them.
+
+Most influential points will be the point with a cook distance of 0.006 or 0.004, which also have a high leverage bigger than 0.0020.
+
+#### test for zero slope
+
+```{R}
+
+summary(lm.fit)
+```
+The p value for the test shown in the summary is p value = 0.0009768 is small, therefore we have sufficient evidence to reject the hypothesis and say that $\beta_1 \ne 0$.
+
+#### Interpret the R2 slope
+
+```{R}
+
+summary(lm.fit)
+
+```
+
+R2 squared = 0.05596
+
+Is the proportion of variation in the debt that is explanined by its linear relationship to the income variable. We can see that there is no significative relationship between these two variables.
+
+
+## Week12: Logistic regression and Experiments vs Observational studies
+
+Logistic regression. Select a binary reponse and continue explanatory/predictor variable.
+(1 p) Plot the data.
+(1 p) Summarize the p^ values for each value of the x-variable. Also, calculate the empirical logits.
+(1 p) Plot the p^ values vs the x-variable and plot the empirical logits vs the x-variable.
+(1 p) Describe the logit-vs-x plot. Is it linear? If not, consider a transformation of x to improve linearity; describe the transformation you chose if you needed one.
+(1 p) Fit the glm() model and assess the deviance lack-of-fit test.
+(1 p) Calculate the confidence bands around the model fit/predictions. Plot on both the logit and p^ scales.
+(1 p) Interpret the sign (+ or ???) of the slope parameter and test whether the slope is different from zero, HA:??1???0.
+
+### Logistic Regression
+
+We are going to study if there is a relationship between having a higher income and having paid health insurance. and also trying to predict what the probability of having health insurance based on your income.
+
+We transform our binary variable into a dummy variable (0,1) and plot the data.
+
+```{R}
+
+table(data_named$health_insurance)
+data_named$health_insurance_bin <- ifelse(data_named$health_insurance == "No", 0, 1)
+table(data_named$health_insurance_bin)
+
+library(popbio)
+logi.hist.plot(data_named$income, data_named$health_insurance_bin
+              , logi.mod = 1 # logistic fit
+              , type = "hist", boxp = FALSE, rug = FALSE
+              , col = "gray")
+
+df.piv.preg.sum <- plyr::ddply(data_named,"income", summarise
+                        , Total = length(health_insurance_bin)
+                        , Success = sum(health_insurance_bin)
+                        )
+df.piv.preg.sum$p.hat <- df.piv.preg.sum$Success / df.piv.preg.sum$Total
+
+df.piv.preg.sum
+
+```
+More employees have health insurance covered. Probability of having health insurance as a benefit is much higher for higher salaries.
+
+```{R}
+library(ggplot2)
+
+
+
+p <- ggplot(df.piv.preg.sum, aes(x = income, y = p.hat))
+p <- p + geom_point(aes(size = Total))
+p <- p + geom_smooth(se = FALSE, colour = "red", aes(weight = Total))  # just for reference
+p <- p + expand_limits(y = 0) + expand_limits(y = 1)
+p <- p + labs(title = "Observed probability of at ")
+
+
+df.piv.preg.sum$emp.logit <- log((    df.piv.preg.sum$p.hat + 0.5/df.piv.preg.sum$Total) /
+                                 (1 - df.piv.preg.sum$p.hat + 0.5/df.piv.preg.sum$Total))
+
+p3 <- ggplot(df.piv.preg.sum, aes(x = income, y = emp.logit))
+p3 <- p3 + geom_point(aes(size = Total))
+p3 <- p3 + stat_smooth(method = "lm", se = FALSE, aes(weight = Total))  # just for reference
+p3 <- p3 + geom_smooth(se = FALSE, colour = "red", aes(weight = Total))  # just for reference
+p3 <- p3 + labs(title = "Empirical logits")
+
+
+library(gridExtra)
+grid.arrange(grobs = list(p,p3), nrow=2)
+
+```
+
+the plot of logit vs x-values is not completely linear,. Since the values in the X axis grow very fast, we can apply a logarithmic transformation on the X axis and smooth down the curve making it look more linear.
+
+
+```{R}
+library(ggplot2)
+p <- ggplot(df.piv.preg.sum, aes(x = income, y = emp.logit))
+p <- p + geom_point(aes(size = Total))
+p <- p + stat_smooth(method = "lm", se = FALSE, aes(weight = Total))  # just for reference
+p <- p + geom_smooth(se = FALSE, colour = "red", aes(weight = Total))  # just for reference
+p <- p + labs(title = "Empirical logits") + scale_x_log10()
+
+
+library(gridExtra)
+grid.arrange(grobs = list(p3,p), nrow=2)
+
+```
+
+```{R}
+
+glm.p.a <- glm(cbind(Success, Total - Success) ~ income, family = binomial, df.piv.preg.sum)
+
+```
+
+State the null hypothesis for lack-of-fit.
+
+* In words: 
+    
+    "$\chi_0:$ is the null hypothesis that says that there is no lack-of-fit"
+    
+* In notation: 
+    
+    $\chi_0$ versus $\chi_1$
+    
+```{R}
+
+
+glm.p.a$deviance
+glm.p.a$df.residual
+
+dev.p.val <- 1 - pchisq(glm.p.a$deviance, glm.p.a$df.residual)
+sprintf("The p value is %e",dev.p.val)
+
+```
+
+Since the P values is zero, we reject the null hypothesis saying that there is a lack of fit as we could already see in the previous plots.
+
+
+```{R}
+# put the fitted values in the data.frame
+df.piv.preg.sum$fitted.values <- glm.p.a$fitted.values
+pred <- predict(glm.p.a, data.frame(income = df.piv.preg.sum$income), type = "link", se.fit = TRUE) #$
+df.piv.preg.sum$fit     <- pred$fit
+df.piv.preg.sum$se.fit  <- pred$se.fit
+# CI for fitted values
+df.piv.preg.sum <- within(df.piv.preg.sum, {
+  fit.lower = exp(fit - 1.96 * se.fit) / (1 + exp(fit - 1.96 * se.fit))
+  fit.upper = exp(fit + 1.96 * se.fit) / (1 + exp(fit + 1.96 * se.fit))
+  })
+```
+
+```{R}
+# plot on probability scale
+
+p <- ggplot(df.piv.preg.sum, aes(x = income, y = p.hat))
+# predicted curve and point-wise 95% CI
+p <- p + geom_ribbon(aes(x = income, ymin = fit.lower, ymax = fit.upper), colour = "blue", linetype = 0, alpha = 0.2)
+p <- p + geom_line(aes(x = income, y = fitted.values), colour = "blue", size = 1)
+# fitted values
+p <- p + geom_point(aes(y = fitted.values), colour = "blue", size=2)
+# observed values
+p <- p + geom_point(aes(size = Total), color = "black")
+p <- p + expand_limits(y = 0) + expand_limits(y = 1)
+p <- p + labs(title = "Observed and predicted health insurance, probability scale")
+print(p)
+```
+
+
+```{R}
+# plot on logit scale
+
+p <- ggplot(df.piv.preg.sum, aes(x = income, y = emp.logit))
+# predicted curve and point-wise 95% CI
+p <- p + geom_ribbon(aes(x = income, ymin = fit - 1.96 * se.fit, ymax = fit + 1.96 * se.fit), linetype = 0, alpha = 0.2)
+p <- p + geom_line(aes(x = income, y = fit), colour = "blue", size = 1)
+# fitted values
+p <- p + geom_point(aes(y = fit), colour = "blue", size=2)
+# observed values
+p <- p + geom_point(aes(size = Total), color = "black")
+p <- p + labs(title = "Observed and predicted health insurance, logit scale")
+print(p)
+```
+```{R}
+
+glm.p.a <- glm(cbind(Success, Total - Success) ~ income, family = binomial, df.piv.preg.sum)
+
+summary_t<-summary(glm.p.a)
+summary_t
+```
+
+The slope is positive, its just a small number (1.2e-5) because it multiplies a big number which is income. This means that probability of having health insurance increases with higher incomes.
+
+```{R}
+sprintf("Since the p value %e is small, we reject the null hypothesis, meaning that the coefficient multiplying out the independent variable is different than zero",summary_t$coefficient[8])
+
+```
+
+### Experiments and observational studies
+
+#### First research question
+
+We are looking for a relationship between job duty and level of satisfaction at your job.
+
+#### Second research question
+
+We are going to study if the mean income of the employees are the same depending on their job satisfaction. where we say that the means are the same for the different level of satisfaction.
+
+We Box plot the data and an apply an ANOVA test to see if the means for each group are diferent
+
+----------------------------------------
+
+# Poster presentation
+
+## Week13: Complete poster in HW document
+
+
+#### The satisfaction effect of the Job role and income 
+
+
+#### 1. __(1 p)__ Introduction
+
+Technology and entrepreneurship have strongly influenced the labor market and how it behaves from the beginning of the 21st century.
+
+I believe internet and globalization have increased the number of professional work opportunities, causing a fast paced changing labor market. From my own experience, I've seen how many of my close relatives and friends are constantly changing their job's placement and even specialty. This boom of oportunities may lead to a increasing number of hires and layoffs, basically a constant changing labor market.
+
+As an early professional who will join the labor market soon, I'm interested in finding out how the labor market has changed and what could cause this changes. Several factors might affect it, but in this research, I'm going to focus on what might lead for AN employee to look for a job change.From the labor market dataset we can find many interesting information which shows us reasons why people leave or join jobs and also their role on their current jobs, which could be directly related to job changes and job satisfaction. 
+
+
+#### 2. __(1 p)__ Research Questions
+
+
+#### First research question : Income and level of satisfaction
+
+We are going to study if the mean income of the employees are the same depending on their job satisfaction. where we say that the means are the same for the different level of satisfaction.
+
+
+#### Second research question : Job role and level of satisfaction
+
+We are looking for a relationship between job duty and level of satisfaction at your job.
+
+
+#### 3. __(1 p)__ Methods
+
+#### First research question : 
+
+* ANOVA : to see if the average income for the different level of satisfaction groups are the same
+
+* multiple comparison test : tell us which groups are have different average income
+  + Fisher least significance difference method
+  + Tukey's honest significance difference method
+  
+#### Second research question :
+
+* chi square analysis: to see if there is a relationship between the two variables
+
+* Two-way categorical analysis: tell us what the relationship
+
+* Mosaic plot : show us graphically the relationship
+
+* chi square residual analysis
+
+
+#### 4. __(1 p)__ Discussion (while this would follow your results, let's put it here so you have a full column to show the results of the analysis of both research questions)
+
+For the first research questions, we can see income differs between different groupd with differetn level of satisfaciton. There is no difference between neither satisfied or dissatisfied, dissatisfies and extremely dissatisfied groups' anual income. But there is a notable difference in income between satisfied and extremely satisifed and these 3 groups.
+
+For the second research question, no supervisor employees have a lower level of satisfaction (or a higher level of dissatisfaction) than the supervisor employees. Low supervisor employees have a higher level of satisfaction that high supervisors, maybe cause by having as much freedom as the high supervisor employees but less stress.
+
+#### 5. __(1 p)__ Further directions or Future work or Next steps or something else that indicates there more to do and you've thought about it.
+
+Future studies would be to check whether high supervisor employees have a higher level of stress while having the same level of freedom as low supervisor employees. This future research could explain why more lower supervisor employees are satisfied than high level employees. 
+
+Another posible qeustion to follow would be to study the relation between productivity and satisfaction at work. Thsi would help explain why people income have the higher satisfaction.
+
+#### 6. __(1 p)__ References
+
+First research question
+
+* Clark, A. E., & Oswald, A. J. (1996). Satisfaction and comparison income. Journal of public economics, 61(3), 359-381.
+
+This paper compares 5000 brithis workers and looks for a relationship between satisfaction level and income. Also find a relationship in workers with the same income between the level of satisfaction and the level of education.
+
+Second research question
+
+* Kawada, T. and Otsuka, T., 2011. Relationship between job stress, occupational position and job satisfaction using a brief job stress questionnaire (BJSQ). Work, 40(4), pp.393-399.
+
+This paper shows the level of stress and satisfaction based on three measurements: job demand, job control and job support. Based on this measurements occupational positions were classified into directors, managers, and general workers. We are going to compare the level of satisfacction for these 3 categories with our results.
+
+
+#### 7. __(2 p)__ Results for your first research question.
+
+### BOX PLOT the data
+
+```{R}
+
+library(ggplot2)
+library(tidyverse)  # Data manipulation and visualization suite
+
+p <- ggplot(data_named %>% drop_na(income) %>%drop_na(satisfied), aes(x = satisfied, y = income))
+# plot a reference line for the global mean (assuming no groups)
+p <- p + geom_hline(yintercept = mean(data_named$income),
+colour = "black", linetype = "dashed", size = 0.3, alpha = 0.5)
+# boxplot, size=.75 to stand out behind CI
+p <- p + geom_boxplot(size = 0.75, alpha = 0.5)
+# points for observed data
+p <- p + geom_point(position = position_jitter(w = 0.05, h = 0), alpha = 0.5)
+# diamond at mean for each group
+p <- p + stat_summary(fun.y = mean, geom = "point", shape = 18, size = 6,
+colour = "red", alpha = 0.8)
+# confidence limits based on normal distribution
+p <- p + stat_summary(fun.data = "mean_cl_normal", geom = "errorbar",
+width = .2, colour = "red", alpha = 0.8)
+p <- p + labs(title = "income based on satisfaction") + ylab("annual income")
+print(p)
+
+```
+
+#### ANOVA Hypothesis test
+
+```{R}
+
+fit.f <- aov(income ~ satisfied, data = data_named)
+anova<-summary(fit.f)
+```
+The significance level of the test be $\alpha=0.1$
+```{R}
+sprintf("the p value is %e",anova[[1]]$`Pr(>F)`[1])
+sprintf("the F value is %f",anova[[1]]$`F value`[1])
+              
+```
+
+P-value is << 0.1, we reject the null hypothesis. Meaning that the mean anual income between groups differ at least between one of the groups.
+
+#### Post Hoc pairwise comparison tests
+
+#### FISHER's multiple comparison method
+
+```{R}
+
+fisher<-pairwise.t.test(data_named$income, data_named$satisfied,
+pool.sd = TRUE, p.adjust.method = "none")
+
+
+
+```
+
+#### Tukey's multiple comparison method
+
+
+```{R}
+
+tukey<-TukeyHSD(fit.f,conf.level = 0.90)
+A<-tukey$satisfied
+B<-c(rownames(A),A[31:40])
+B
+C<-rownames(A)
+D<-A[31:40]
+B<-rbind(rownames(A),A[31:40])
+t(B)
+
+```
+
+Looking at the p-values we can see that these 3 groups anual income do not differ.
+
+dissatisifed-Neither satisifes or dissatisfied 
+Extremely dissatisfied-Neither satisifes or dissatisfied
+Extremely dissatisfied-dissatisifed 
+
+Extremely satisfied | satisfied | neither satisfied or dissatisfied | dissatisfied | extremely dissatisfied
+
+                                 --------------------------------------------------------------------------
+
+#### 8. __(2 p)__ Results for your second research question.
+
+#### CHI squares Hypothesis test
+
+We are going to study the relationship between job duty and level of satisfaction.
+
+Let's state our Null hypothesis:
+
+In words: ''There is no association between job duty and level of satisfaction.''
+      
+In notation: $H_0: p(i \textrm{ and } j) = p(i)p(j)$ versus $H_A: p(i \textrm{ and } j) \ne p(i)p(j)$, for all row categories $i$ and column categories $j$.
+
+We choose the __significance level__ of the test, such as $\alpha=0.05$
+
+```{R}
+
+save(data_named,file="datanamed.Rdata")
+
+tab <- xtabs(~ satisfied + job_duty, data = data_named)
+tab
+chitest<- chisq.test(tab, correct=FALSE)
+chitest$p.value
+table(data_named$satisfied)
+```
+
+
+Conclusion of the test:
+
+We conclude that we reject the null hypothesis, therefore there is an association or statistically depedency between the job duty and the level of satisfaction.
+
+
+#### 2 way categorical analysis tables
+
+```{R}
+tab
+prop.table(tab)
+
+```
+
+#### MOSAIC plot
+
+```{R ,fig.width=8, fig.height=8}
+library(vcd)
+library(ggplot2)
+
+mosaic(~  job_duty + satisfied, data = data_named, shade=TRUE, legend=TRUE, direction = "v", rot_labels=c(0,0), margin=c(8,0,0) )
+
+```
+
+Lets do first a general interpretation of the mosaic plot. From what it's shown, no supervisor employees have a lower level of satisfaction (or a higher level of dissatisfaction) than the supervisor employees. Low supervisor employees have a higher level of satisfaction that high supervisors, maybe cause by having as much freedom as the high supervisor employees but less stress.
+
+For no supervisor employees, we expected more employees extremely satisfied of satisfied with their job and less dissastisfied employees and a lot less of extremely dissatisfied employees.
+For supervisor employees, we expected less extremly satisfied employees and more dissatisfied and extremely dissatisfied employees.
+High supervisor satisfaction frequency was pretty accurate based on the observations there were less people extremely dissatisfied high supervisor employees than we expected.
+
+#### CHI square residuals analysis
+
+```{R}
+chitest$residuals
+```
+Looking at the residuals: 
+
+The residuals between supervisor employees and dissatisfaction and extreme dissatisfaction are very negative, meaning that there are less supervisor employees dissatisfied with their job than expected. Also the residuals between high supervisor employees and extremely dissatisfaction are negavtives smaller than -2, therefore there are also less extremely disastisfied high supervisor employees than expected.
+The residuals between satisfied and extremely satisfied and no Supervisor employees are negative smaller than -2, meaning that there are less satisfied no supervisor employees as we expected.
+
+Let's look at the positive residuals, such as the residuals between dissatisfied and extremely dissatisfied and no supervisor employees, where residuals are positive bigger than 2. Meaning that there are more dissatisfied and extremely dissatisfied no supervisor employees than we expected.
+We can also see positive residuals between extremly satisfied and supervisor employeers, meaning that there are more extremely satisfied supervisor employees than we expected.
+
+
+<!--- References are always at the bottom so a section label identifies them. -->
+
+# References (from Week02)
